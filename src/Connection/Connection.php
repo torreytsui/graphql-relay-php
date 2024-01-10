@@ -90,12 +90,12 @@ class Connection {
             throw new \InvalidArgumentException('Connection config needs to have at least a node definition');
         }
         $nodeType = $config['nodeType'];
-        $name = array_key_exists('name', $config) ? $config['name'] : $nodeType->name;
+        $name = array_key_exists('name', $config) ? $config['name'] : $nodeType->name . 'Connection';
         $connectionFields = array_key_exists('connectionFields', $config) ? $config['connectionFields'] : [];
         $edgeType = array_key_exists('edgeType', $config) ? $config['edgeType'] : null;
 
         $connectionType = new ObjectType([
-            'name' => $name . 'Connection',
+            'name' => $name,
             'description' => 'A connection to a list of items.',
             'fields' => function() use ($edgeType, $connectionFields, $config) {
                 return array_merge([
@@ -127,13 +127,13 @@ class Connection {
             throw new \InvalidArgumentException('Edge config needs to have at least a node definition');
         }
         $nodeType = $config['nodeType'];
-        $name = array_key_exists('name', $config) ? $config['name'] : $nodeType->name;
+        $name = array_key_exists('name', $config) ? $config['name'] : $nodeType->name . 'Edge';
         $edgeFields = array_key_exists('edgeFields', $config) ? $config['edgeFields'] : [];
         $resolveNode = array_key_exists('resolveNode', $config) ? $config['resolveNode'] : null;
         $resolveCursor = array_key_exists('resolveCursor', $config) ? $config['resolveCursor'] : null;
 
         $edgeType = new ObjectType(array_merge([
-            'name' => $name . 'Edge',
+            'name' => $name,
             'description' => 'An edge in a connection',
             'fields' => function() use ($nodeType, $resolveNode, $resolveCursor, $edgeFields) {
                 return array_merge([
